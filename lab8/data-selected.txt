@@ -1,0 +1,30 @@
+leng@leng-HP-Compaq-6710b-RM222UT-ABA:~$ free -w
+              total        used        free      shared     buffers       cache   available
+Mem:        2033452      885968      367052      318260       24604      755828      650424
+Swap:       2086908      386000     1700908
+Program open: Text Editor, FireFox-blackboard, Outlook, LibreOffice Writer, LibreOffice Impress, Terminal
+
+leng@leng-HP-Compaq-6710b-RM222UT-ABA:~$ free -w
+              total        used        free      shared     buffers       cache   available
+Mem:        2033452     1077764      157600      341500       25196      772892      434928
+Swap:       2086908      385744     1701164
+Program open: Text Editor, FireFox-blackboard, youtube, Outlook, LibreOffice Writer, LibreOffice Impress, Terminal
+
+leng@leng-HP-Compaq-6710b-RM222UT-ABA:~$ free -w
+              total        used        free      shared     buffers       cache   available
+Mem:        2033452     1252884       73276      340172       25348      681944      261164
+Swap:       2086908      394992     1691916
+Program open: Text Editor, FireFox-blackboard, youtube, Outlook, CNN, LibreOffice Writer, LibreOffice Impress, Terminal
+
+leng@leng-HP-Compaq-6710b-RM222UT-ABA:~$ free -w
+              total        used        free      shared     buffers       cache   available
+Mem:        2033452     1305504      104388      341972        3812      619748      206868
+Swap:       2086908      396024     1690884
+Program open: Text Editor, FireFox-blackboard, youtube, Outlook, CNN, Google, LibreOffice Writer, LibreOffice Impress, Terminal
+
+leng@leng-HP-Compaq-6710b-RM222UT-ABA:~$ free -w
+              total        used        free      shared     buffers       cache   available
+Mem:        2033452     1410440       71788      347080        9788      541436       96520
+Swap:       2086908      569088     1517820
+Program open: Text Editor, FireFox-blackboard, youtube, Outlook, CNN, Google, ESPN, LibreOffice Writer, LibreOffice Impress, Terminal, VIM
+

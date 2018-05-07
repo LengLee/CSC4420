@@ -1,0 +1,5 @@
+the behavior for the memory usuage gets higher every point because i open more applications everytime. causing the usage to get higher than before. 
+
+Similarly the Buffer and the Cache lso reacts in similar ways. They both increase for the first 3 states then decreases then increase a little. this is because of the different type of apps opened doesn't require the buffer and cache much which cause it to drop until the 5th state. 
+
+The Swap increases throughout all 5 times because all of them have room to grow after each free of the memory/. 

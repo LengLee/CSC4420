@@ -1,0 +1,672 @@
+{\rtf1\ansi\deff3\adeflang1025
+{\fonttbl{\f0\froman\fprq2\fcharset0 Times New Roman;}{\f1\froman\fprq2\fcharset2 Symbol;}{\f2\fswiss\fprq2\fcharset0 Arial;}{\f3\froman\fprq2\fcharset0 Liberation Serif{\*\falt Times New Roman};}{\f4\fswiss\fprq2\fcharset0 Liberation Sans{\*\falt Arial};}{\f5\fmodern\fprq1\fcharset0 Liberation Mono{\*\falt Courier New};}{\f6\fnil\fprq2\fcharset0 Noto Sans CJK SC Regular;}{\f7\fmodern\fprq1\fcharset0 Nimbus Mono L{\*\falt Courier New};}{\f8\fnil\fprq2\fcharset0 FreeSans;}{\f9\fswiss\fprq0\fcharset128 FreeSans;}}
+{\colortbl;\red0\green0\blue0;\red0\green0\blue255;\red0\green255\blue255;\red0\green255\blue0;\red255\green0\blue255;\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;\red0\green0\blue128;\red0\green128\blue128;\red0\green128\blue0;\red128\green0\blue128;\red128\green0\blue0;\red128\green128\blue0;\red128\green128\blue128;\red192\green192\blue192;}
+{\stylesheet{\s0\snext0\nowidctlpar\hyphpar0\cf0\dbch\af6\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang4105 Normal;}
+{\s15\sbasedon0\snext16\sb240\sa120\keepn\dbch\af6\dbch\af8\afs28\loch\f4\fs28 Heading;}
+{\s16\sbasedon0\snext16\sl288\slmult1\sb0\sa140 Text Body;}
+{\s17\sbasedon16\snext17\sl288\slmult1\sb0\sa140\dbch\af9 List;}
+{\s18\sbasedon0\snext18\sb120\sa120\noline\i\dbch\af9\afs24\ai\fs24 Caption;}
+{\s19\sbasedon0\snext19\noline\dbch\af9 Index;}
+{\s20\sbasedon0\snext20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20 Preformatted Text;}
+}{\*\generator LibreOffice/5.1.6.2$Linux_X86_64 LibreOffice_project/10m0$Build-2}{\info{\creatim\yr0\mo0\dy0\hr0\min0}{\revtim\yr2018\mo4\dy29\hr15\min49}{\printim\yr0\mo0\dy0\hr0\min0}}\deftab709
+\viewscale100
+{\*\pgdsctbl
+{\pgdsc0\pgdscuse451\pgwsxn12240\pghsxn15840\marglsxn1134\margrsxn1134\margtsxn1134\margbsxn1134\pgdscnxt0 Default Style;}}
+\formshade\paperh15840\paperw12240\margl1134\margr1134\margt1134\margb1134\sectd\sbknone\sectunlocked1\pgndec\pgwsxn12240\pghsxn15840\marglsxn1134\margrsxn1134\margtsxn1134\margbsxn1134\ftnbj\ftnstart1\ftnrstcont\ftnnar\aenddoc\aftnrstcont\aftnstart1\aftnnrlc
+{\*\ftnsep\chftnsep}\pgndec\pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+/*}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* s3fs - FUSE-based file system backed by Amazon S3}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* Copyright(C) 2007 Randy Rizun <rrizun@gmail.com>}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* This program is free software; you can redistribute it and/or}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* modify it under the terms of the GNU General Public License}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* as published by the Free Software Foundation; either version 2}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* of the License, or (at your option) any later version.}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* This program is distributed in the hope that it will be useful,}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* but WITHOUT ANY WARRANTY; without even the implied warranty of}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* GNU General Public License for more details.}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* You should have received a copy of the GNU General Public License}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* along with this program; if not, write to the Free Software}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+*/}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+#ifndef FD_CACHE_H_}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+#define FD_CACHE_H_}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+#include <sys/statvfs.h>}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+#include "curl.h"}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+//------------------------------------------------}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+// CacheFileStat}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+//------------------------------------------------}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+class CacheFileStat}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+private:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+std::string path;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int         fd;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+private:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool MakeCacheFileStatPath(const char* path, std::string& sfile_path, bool is_create_dir = true);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+public:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool DeleteCacheFileStat(const char* path);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool CheckCacheFileStatTopDir(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool DeleteCacheFileStatDirectory(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+explicit CacheFileStat(const char* tpath = NULL);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+~CacheFileStat();}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool Open(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool Release(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool SetPath(const char* tpath, bool is_open = true);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int GetFd(void) const \{ return fd; \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+\};}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+//------------------------------------------------}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+// fdpage & PageList}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+//------------------------------------------------}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+// page block information}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+struct fdpage}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+off_t  offset;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+size_t bytes;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+bool   loaded;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+fdpage(off_t start = 0, size_t size = 0, bool is_loaded = false)}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+           }{\rtlch \ltrch\loch
+: offset(start), bytes(size), loaded(is_loaded) \{\}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+off_t next(void) const \{ return (offset + bytes); \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+off_t end(void) const \{ return (0 < bytes ? offset + bytes - 1 : 0); \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+//void bxor(int fd); }
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+//void decrypt(int fd); }
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\highlight7\rtlch \ltrch\loch
+void myrc4(int fd); }
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+\};}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+typedef std::list<struct fdpage*> fdpage_list_t;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+class FdEntity;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+//}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+// Management of loading area/modifying}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+//}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+class PageList}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+friend class FdEntity;    // only one method access directly pages.}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+private:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+fdpage_list_t pages;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+private:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+void Clear(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool Compress(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool Parse(off_t new_pos);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+public:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static void FreeList(fdpage_list_t& list);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+explicit PageList(size_t size = 0, bool is_loaded = false);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+~PageList();}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool Init(size_t size, bool is_loaded);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+size_t Size(void) const;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool Resize(size_t size, bool is_loaded);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool IsPageLoaded(off_t start = 0, size_t size = 0) const;                  // size=0 is checking to end of list}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool SetPageLoadedStatus(off_t start, size_t size, bool is_loaded = true, bool is_compress = true);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool FindUnloadedPage(off_t start, off_t& resstart, size_t& ressize) const;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+size_t GetTotalUnloadedPageSize(off_t start = 0, size_t size = 0) const;    // size=0 is checking to end of list}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int GetUnloadedPages(fdpage_list_t& unloaded_list, off_t start = 0, size_t size = 0) const;  // size=0 is checking to end of list}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool Serialize(CacheFileStat& file, bool is_output);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+void Dump(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+\};}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+//------------------------------------------------}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+// class FdEntity}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+//------------------------------------------------}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+class FdEntity}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+private:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+pthread_mutex_t fdent_lock;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool            is_lock_init;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+PageList        pagelist;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int             refcnt;         // reference count}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+std::string     path;           // object path}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+std::string     cachepath;      // local cache file path}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+                                    }{\rtlch \ltrch\loch
+// (if this is empty, does not load/save pagelist.)}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+std::string     mirrorpath;     // mirror file path to local cache file path}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int             fd;             // file descriptor(tmp file or cache file)}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+FILE*           pfile;          // file pointer(tmp file or cache file)}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool            is_modify;      // if file is changed, this flag is true}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+headers_t       orgmeta;        // original headers at opening}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+size_t          size_orgmeta;   // original file size in original headers}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+std::string     upload_id;      // for no cached multipart uploading when no disk space}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+etaglist_t      etaglist;       // for no cached multipart uploading when no disk space}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+off_t           mp_start;       // start position for no cached multipart(write method only)}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+size_t          mp_size;        // size for no cached multipart(write method only)}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+private:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static int FillFile(int fd, unsigned char byte, size_t size, off_t start);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+void Clear(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int OpenMirrorFile(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool SetAllStatus(bool is_loaded);                          // [NOTE] not locking}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+//bool SetAllStatusLoaded(void) \{ return SetAllStatus(true); \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool SetAllStatusUnloaded(void) \{ return SetAllStatus(false); \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+public:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+explicit FdEntity(const char* tpath = NULL, const char* cpath = NULL);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+~FdEntity();}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+void Close(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool IsOpen(void) const \{ return (-1 != fd); \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool IsMultiOpened(void) const \{ return refcnt > 1; \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int Open(headers_t* pmeta = NULL, ssize_t size = -1, time_t time = -1, bool no_fd_lock_wait = false);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool OpenAndLoadAll(headers_t* pmeta = NULL, size_t* size = NULL, bool force_load = false);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int Dup();}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+const char* GetPath(void) const \{ return path.c_str(); \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+void SetPath(const std::string &newpath) \{ path = newpath; \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int GetFd(void) const \{ return fd; \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool GetStats(struct stat& st);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int SetMtime(time_t time);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool UpdateMtime(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool GetSize(size_t& size);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool SetMode(mode_t mode);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool SetUId(uid_t uid);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool SetGId(gid_t gid);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool SetContentType(const char* path);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int Load(off_t start = 0, size_t size = 0);                 // size=0 means loading to end}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int NoCacheLoadAndPost(off_t start = 0, size_t size = 0);   // size=0 means loading to end}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int NoCachePreMultipartPost(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int NoCacheMultipartPost(int tgfd, off_t start, size_t size);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int NoCacheCompleteMultipartPost(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int RowFlush(const char* tpath, bool force_sync = false);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+int Flush(bool force_sync = false) \{ return RowFlush(NULL, force_sync); \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+ssize_t Read(char* bytes, off_t start, size_t size, bool force_load = false);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+ssize_t Write(const char* bytes, off_t start, size_t size);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool ReserveDiskSpace(size_t size);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+void CleanupCache();}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+\};}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+typedef std::map<std::string, class FdEntity*> fdent_map_t;   // key=path, value=FdEntity*}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+//------------------------------------------------}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+// class FdManager}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+//------------------------------------------------}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+class FdManager}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+private:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static FdManager       singleton;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static pthread_mutex_t fd_manager_lock;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static pthread_mutex_t cache_cleanup_lock;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static pthread_mutex_t reserved_diskspace_lock;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool            is_lock_init;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static std::string     cache_dir;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool            check_cache_dir_exist;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static size_t          free_disk_space; // limit free disk space}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+fdent_map_t            fent;}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+private:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static uint64_t GetFreeDiskSpace(const char* path);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+void CleanupCacheDirInternal(const std::string &path = "");}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+  }{\rtlch \ltrch\loch
+public:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+FdManager();}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+~FdManager();}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+// Reference singleton}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static FdManager* get(void) \{ return &singleton; \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool DeleteCacheDirectory(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static int DeleteCacheFile(const char* path);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool SetCacheDir(const char* dir);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool IsCacheDir(void) \{ return (0 < FdManager::cache_dir.size()); \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static const char* GetCacheDir(void) \{ return FdManager::cache_dir.c_str(); \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool MakeCachePath(const char* path, std::string& cache_path, bool is_create_dir = true, bool is_mirror_path = false);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool CheckCacheTopDir(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool MakeRandomTempPath(const char* path, std::string& tmppath);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool SetCheckCacheDirExist(bool is_check);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool CheckCacheDirExist(void);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static size_t GetEnsureFreeDiskSpace(void) \{ return FdManager::free_disk_space; \}}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static size_t SetEnsureFreeDiskSpace(size_t size);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static bool IsSafeDiskSpace(const char* path, size_t size);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+static void FreeReservedDiskSpace(size_t size);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool ReserveDiskSpace(size_t size);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+FdEntity* GetFdEntity(const char* path, int existfd = -1);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+FdEntity* Open(const char* path, headers_t* pmeta = NULL, ssize_t size = -1, time_t time = -1, bool force_tmpfile = false, bool is_create = true, bool no_fd_lock_wait = false);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+FdEntity* ExistOpen(const char* path, int existfd = -1, bool ignore_existfd = false);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+void Rename(const std::string &from, const std::string &to);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool Close(FdEntity* ent);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+bool ChangeEntityToTempPath(FdEntity* ent, const char* path);}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch
+    }{\rtlch \ltrch\loch
+void CleanupCacheDir();}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+\};}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+#endif // FD_CACHE_H_}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20\rtlch \ltrch\loch
+
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+/*}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+* Local variables:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+* tab-width: 4}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+* c-basic-offset: 4}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+* End:}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+* vim600: noet sw=4 ts=4 fdm=marker}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+* vim<600: noet sw=4 ts=4}
+\par \pard\plain \s20\sb0\sa0\dbch\af7\dbch\af5\afs20\loch\f5\fs20{\rtlch \ltrch\loch
+*/}
+\par }
